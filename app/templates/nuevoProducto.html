@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--formulario de registro de producto-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <br>
+                <div class="panel-heading">
+                    <center><h3 class="panel-title">{% if producto %}Actualizar Produto{%else%}Nuevo Producto{% endif %}</h3></center>
+                </div>
+                <br>
+                <div class="panel-body">
+                    <form action="{% if producto %}updateProducto{%else%}addProducto{% endif %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input {% if producto %} value="{{producto.id}}" {%endif%} required type="hidden" id="id" name="id">
+
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" {% if producto %} value="{{producto.nombre}}" {%endif%} required class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion</label>
+                            <textarea required class="form-control" id="descripcion" name="descripcion" rows="3">{% if producto %} {{producto.descripcion}} {%endif%}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Precio</label>
+                            <input type="number" {% if producto %} value="{{producto.precio}}" {%endif%} required class="form-control" id="precio" name="precio" placeholder="Precio">
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Oferta</label>
+                            <input type="number" {% if producto %} value="{{producto.oferta}}" {%endif%} required class="form-control" id="oferta" name="oferta" placeholder="Si no desea añadir oferta dejar en blanco o 0">
+                        </div>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad</label>
+                            <input type="number" {% if producto %} value="{{producto.stock}}" {%endif%} required class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad">
+                        </div>
+                        <div class="form-group">
+                            <label for="imagen">Imagen</label>
+                            <input type="file" class="form-control" id="imagen" name="imagen">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="" for="categoria">Categoria</label>
+                            <select required class="form-control w-100" id="categoria" name="categoria">
+                                <option value="">Seleccione un categoria</option>
+                                {% for categoria in categorias %}
+                                <option {% if categoria.id == producto.categoria.id  %} selected {% endif %}  value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group">
+                            <label style="" for="categoria">Visibilidad del producto</label>
+                            {{producto.activo}}
+                            <select required class="form-control w-100" id="estado" name="estado">
+                                <option {% if producto.activo == True %} selected {% endif %} value="1">Mostrar Producto</option>
+                                <option {% if producto.activo == False %} selected {% endif %}  value="0">No mostrar Producto</option>
+                            </select>
+
+                        </div>
+     
+                        <br>
+                        <br>
+                       
+                        <br>
+                        <button type="submit" class="btn btn-primary">  {% if producto %} Actualizar {%else%} Registrar {% endif %} </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock%}

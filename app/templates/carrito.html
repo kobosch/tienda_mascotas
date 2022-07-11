@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="venta" method="post">
+    {% csrf_token %}
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in carrito %}
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img style="    max-width: 58px;
+                                    max-height: auto;
+                                    height: auto;" src="{{url}}{{item.imagen}}" alt="">
+                                        <h5>{{item.producto}}</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        ${{item.precio}}
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div>
+                                                <input style="height: 100%;
+                                            width: 100%;
+                                            font-size: 16px;
+                                            color: #6f6f6f;
+                                            width: 50px;
+                                            border: none;
+                                            background: #f5f5f5;
+                                            text-align: center;" disabled type="text" value="{{item.cantidad}}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        {{item.total}}
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <a href="eliminaritem?producto={{item.id}}"><span class="icon_close"></span></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6" style="visibility:s">
+                    <div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <h5>Datos</h5>
+                            <input type="text" name="tarjeta" required class="pago" placeholder="N° Tarjeta">
+                            <input type="month" name="fecha" required class="pago" placeholder="Fecha vencimiento">
+                            <input style="margin-top:5px;" required class="pago" type="number" maxlength="4"
+                                minlength="4" name="v" placeholder="CVV">
+                            <hr>
+                            <h5>Datos de entrega</h5>
+                            <input style="margin-top:1px;" required class="pago w-100" type="text" name="direccion"
+                                placeholder="Direccion de entrega">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Resumen</h5>
+                        <ul>
+                            <li>Total <span>${{total}}</span></li>
+                        </ul>
+                        <button {% if total == 0 %} disabled {% endif %} class="primary-btn w-100">COMPRAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+<style>
+    .pago {
+        width: 255px;
+        height: 46px;
+        border: 1px solid #cccccc;
+        font-size: 16px;
+        color: #b2b2b2;
+        text-align: center;
+        display: inline-block;
+        margin-right: 15px;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--import datatable-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.uikit.min.css" />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/js/dataTables.uikit.min.js" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+{% csrf_token %}
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Categorias</h2>
+                </div>
+                <div class="shoping__cart__table">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!--formulario de añadir categoria-->
+                            <form action="addCategory" method="POST">
+
+                            <div class="input-group mb-3 shoping__cart__btns" style="    align-items: center;
+                            width: 40%;
+                            float: right;">
+                            {% csrf_token %}
+                                    <input type="text" class="form-control" placeholder="Nombre de categoria" aria-label="Recipient's username" name="category" aria-describedby="button-addon2">
+                                    <button type="submit" class="primary-btn cart-btn">Agregar Producto</button>
+                               
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    <br>
+                    <table id="mytable">
+                        <thead>
+                            <tr>
+                                <th style="display: none;">ID Categoria</th>
+                                <th>Nombre de categoria</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for categoria in categorias %}
+                            <tr>
+                                <td style="display: none;">
+                                    {{categoria.id}}
+                                </td>
+                                <td class="">
+                                    {{categoria.nombre}}
+                                </td>
+                               
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</form>
+
+
+
+
+
+<style>
+    .pago {
+        width: 255px;
+        height: 46px;
+        border: 1px solid #cccccc;
+        font-size: 16px;
+        color: #b2b2b2;
+        text-align: center;
+        display: inline-block;
+        margin-right: 15px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#mytable').DataTable(
+            {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "order": [
+                    [0, "desc"]
+                ],
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [5, 10, 15, "Todos"]
+                ],
+                "pageLength": 5,
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+
+                
+
+
+            }
+
+        );
+    });
+</script>
+{% endblock %}

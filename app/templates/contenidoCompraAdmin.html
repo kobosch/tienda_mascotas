@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--import datatable-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.uikit.min.css" />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/js/dataTables.uikit.min.js" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+{% csrf_token %}
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Contenido Compra N°</h2>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        
+                        <div class="shoping__cart__btns" style="float: left;">
+                            
+                            <a href="adminCompras" class="primary-btn cart-btn">Volver</a>
+                        </form>
+                        </div>
+
+
+                        <div class="shoping__cart__btns" style="float: right;">
+                            <form method="post" action="cambiarEstado">
+
+                            <select name="idEstado" id="idEstado" class="form-control">
+                                <option value="">Seleccione una opción</option>
+                                {% for estado in estados %}
+                                <option {% if compra.estado.id == estado.id%} selected {% endif %}  value="{{estado.id}}">{{estado.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="hidden" name="idCompra" value="{{compra.id}}">
+                            {% csrf_token %}
+                            <button type="submit" class="primary-btn cart-btn">Cambiar estado</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="shoping__cart__table">
+                    <table id="mytable">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>cantidad</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for compra in productos %}
+                            <tr>
+                                <td class="">
+                                    {{compra.producto.nombre}}
+                                </td>
+                                <td class="">
+                                    {{compra.cantidad}}
+                                </td>
+                              
+                              
+                                <td class="">
+                                    ${{compra.monto}}
+                                </td>
+                                
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</form>
+<style>
+    .pago {
+        width: 255px;
+        height: 46px;
+        border: 1px solid #cccccc;
+        font-size: 16px;
+        color: #b2b2b2;
+        text-align: center;
+        display: inline-block;
+        margin-right: 15px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#mytable').DataTable(
+            {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            },
+            {
+                "order": [[0, "desc"]]
+            }
+
+        );
+    });
+</script>
+{% endblock %}

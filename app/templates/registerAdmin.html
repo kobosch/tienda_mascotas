@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Registro de usuario</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="/static/register/css/opensans-font.css">
+	<link rel="stylesheet" type="text/css" href="/static/register/fonts/line-awesome/css/line-awesome.min.css">
+	<!-- Jquery -->
+	<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="/static/register/css/style.css"/>
+    <!--importar sweet alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--importar bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!--importar jquery validacion-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+
+</head>
+<body class="form-v7">
+	<div class="page-content">
+		<div class="form-v7-content">
+			<div class="form-left" style="display:none;">
+				<img src="/static/register/images/form-v7.jpg" alt="form">
+				<p class="text-1">Registrarse</p>
+			</div>
+			<form class="form-detail" action="registro" method="post" id="myform">
+                {% csrf_token %}
+                <div class="form-row">
+					<label for="username">Usuario</label>
+					<input type="text" name="username" id="username" class="input-text">
+				</div>
+                <div class="form-row">
+					<label for="username">Nombre</label>
+					<input type="text" name="name" id="name" class="input-text">
+				</div>
+                <div class="form-row">
+					<label for="username">Apellido</label>
+					<input type="text" name="lastname" id="lastname" class="input-text">
+				</div>
+				<div class="form-row">
+					<label for="your_email">Correo</label>
+					<input type="text" name="email" id="email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+				</div>
+				<div class="form-row">
+					<label for="password">Contraseña</label>
+					<input type="password" name="password" id="password" class="input-text" required>
+				</div>
+				
+                {% if tipos %}
+                <div class="form-row">
+                    <label for="tipo">Tipo de usuario</label>
+                    <select name="tipo" id="tipo" class="input-select">
+                        {% for tipo in tipos %}
+                        <option value="{{tipo.id}}">{{tipo}}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+				<div class="form-row-last" style="text-align: center;">
+                    <!--boton lindo de registrar-->
+                    <button type="submit" class="btn primary-btn w-90">Registrar</button>
+                    <a  href="login" class="btn warning-btn w-90 btn-warning back">Volver</a>
+
+                </div>
+			</form>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+   
+{% if messages %}
+{% for message in messages %}
+{{ message.tags }}
+<script>
+    swal("{{ message.tags }}", "{{message}}", "{{ message.tags }}");
+</script>
+{% endfor %}
+{% endif %}
+
+<style>
+  .input-select{
+    width: 100%;
+    padding: 5px 15px 10px 15px;
+    border: 2px solid transparent;
+    border-bottom: 2px solid #e5e5e5;
+    appearance: unset;
+    -moz-appearance: unset;
+    -webkit-appearance: unset;
+    -o-appearance: unset;
+    -ms-appearance: unset;
+    outline: none;
+    -moz-outline: none;
+    -webkit-outline: none;
+    -o-outline: none;
+    -ms-outline: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+  .page-content{
+    background-image:url(/static/img/transparente.png)!important;
+}
+.form-v7-content {
+    width: 910px;
+    margin: 30px 0;
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    display: flex;
+    display: -webkit-flex;
+}   
+
+.primary-btn {
+    color: #fff;
+    background-color: #4ca4ae;
+    border-color: #4ca4ae;
+}
+.w-90{
+    width:30%;
+}
+.back{
+    color:white!important;
+}
+</style>
+<!--centrar formulario para que quede fijo -->
+
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

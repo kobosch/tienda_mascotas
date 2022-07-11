@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--pagina informativa con estilo-->
+<center>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        Suscribete ahora
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        <br>
+                        <strong>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            ¡Bienvenido al programa de suscripciones!
+                        </strong>
+                    </p>
+                    <p>
+                        Mediante este programa podras tener acceso a distintas ofertas de servicios que te podran ayudar a mejorar tu experienia de compra.
+                    </p>
+                    <p>
+                        Lo mejor de todo es que este programa de suscripcion <b> es gratuita</b>, sin costo alguno.
+                    </p>
+                    <p>
+                        Si no tiene una cuenta, puede crearla haciendo click en el botón "Crear cuenta".
+                    </p>
+                    
+                    <p>
+                        <b>Podras acceder a precios increíbles y ofertas que te podran interesar.</b>
+                    </p>
+                    <!--formulario de aceptacion de terminos-->
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="_token" value="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  required name="aceptar" value="1">
+                                Acepto los términos y condiciones de la suscripción.
+                            </label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Unirme al programa de suscripciones
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}
+

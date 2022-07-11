@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--import datatable-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.uikit.min.css" />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/js/dataTables.uikit.min.js" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+{% csrf_token %}
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Administrar usuarios</h2>
+                    
+                </div>
+
+                <div class="shoping__cart__table">
+                    <!--boton de agregar usuario-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="shoping__cart__btns" style="float: right;">
+                                <a href="registroAdmin" class="primary-btn cart-btn">Agregar Usuario</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <table id="mytable">
+                        <thead>
+                            <tr>
+                                <th>Identificador</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Ultima conexion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td class="">
+                                    {{user.id}}
+                                </td>
+                                <td class="">
+                                    {{user.username}}
+                                </td>
+                              
+                              
+                                <td class="">
+                                    {{user.email}}
+                                </td>
+                                <td class="">
+                                    
+                                    {{user.groups.all.0}}
+                                </td>
+                                <td class="">
+                                    {{user.last_login}}
+                                </td>
+                                <td class="">
+                                    {% if user.is_active%}
+                                    <a href="statusUser?idUsuario={{user.id}}" class="btn btn-danger">Desactivar</a>
+                                    {% else %}
+                                    <a href="statusUser?idUsuario={{user.id}}" class="btn btn-success">Activar</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</form>
+<style>
+    .pago {
+        width: 255px;
+        height: 46px;
+        border: 1px solid #cccccc;
+        font-size: 16px;
+        color: #b2b2b2;
+        text-align: center;
+        display: inline-block;
+        margin-right: 15px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#mytable').DataTable(
+            {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            },
+            {
+                "order": [[0, "desc"]]
+            }
+
+        );
+    });
+</script>
+{% endblock %}
